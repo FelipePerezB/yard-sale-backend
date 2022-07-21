@@ -27,7 +27,7 @@
     "faker": "^5.5.3",
     "joi": "^17.6.0"
   },
-  "engines":{
+  "engines": {
     "node": "16.x"
   }
 }

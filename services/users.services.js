@@ -1,18 +1,20 @@
-const faker = require("faker");
+const faker = require('faker');
+const Service = require('./services');
 
-class UsersService {
-  constructor(){
-    this.users=[]
-    this.generate()
+class UsersService extends Service {
+  constructor() {
+    super();
+    this.data = [];
+    this.generate(this.data);
   }
-  generate(){
+  generate(data) {
     const TOTAL_USERS = 20;
     for (let i = 0; i < TOTAL_USERS; i++) {
       const name = faker.name.findName();
       const arrayName = name.split(' ');
       const firstName = arrayName[0];
       const lastName = arrayName[1];
-      this.users.push({
+      data.push({
         id: faker.datatype.uuid(),
         email: faker.internet.email(firstName, lastName),
         name: name,
@@ -22,29 +24,6 @@ class UsersService {
       });
     }
   }
-  create(){
-
-  }
-  find = () => this.users
-  findOne=(id)=>{
-    const user = this.users.find((user) => user.id == id);
-    return user
-  }
-    // return {}
-    // if(user){
-    //   res.json(user);
-    // } else{
-    //   res.status(404).json({
-    //     message:"Error 404: not found"
-    //   })
-    // }
-
-  update(){
-
-  }
-  delete(){
-
-  }
 }
 
-module.exports = UsersService
+module.exports = UsersService;

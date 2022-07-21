@@ -1,25 +1,56 @@
 const express = require('express');
+const { createCategorySchema, updateCategorySchema, getCategorySchema } = require('./../schemas/categories.schema');
+
+const CategoriesService = require('../services/categories.services');
+const validatorHandler = require('../middlewares/validator.handler');
+
 const router = express.Router();
-const faker = require("faker")
+const service = new CategoriesService();
 
-const categories = []
-const TOTAL_CATEGORIES = 10
-for(let i=0; i<TOTAL_CATEGORIES; i++){
-  categories.push({
-    id: i+1,
-    name: faker.commerce.department(),
-    image: faker.image.imageUrl()
-  })
-}
-
-// CATEGORIES
-router.get('/', (req, res) => {
-  res.json(categories);
+router.get('/', async (req, res, next) => {
+  try {
+    const { limit, offset } = req.query;
+    const response = await service.find(limit, offset);
+    res.json(response);
+  } catch (error) {
+    next(error);
+  }
 });
-router.get('/:id', (req, res) => {
+
+router.get('/:id', validatorHandler(getCategorySchema, 'params'), async (req, res, next) => {
   const { id } = req.params;
-  const category = categories.find((category) => category.id == id);
-  res.json(category);
+  try {
+    const response = await service.findOne(id);
+    res.json(response);
+  } catch (error) {
+    next(error);
+  }
 });
 
-module.exports=router
+router.post('/', validatorHandler(createCategorySchema, 'body'), async (req, res) => {
+  const body = req.body;
+  const response = await service.create(body);
+  res.status(201).json(response);
+});
+
+router.put('/:id', validatorHandler(updateCategorySchema, 'body'), async (req, res) => {
+  const { id } = req.params;
+  const body = req.body;
+  const response = await service.update(id, body);
+  res.json(response);
+});
+
+router.patch('/:id', validatorHandler(updateCategorySchema, 'body'), async (req, res) => {
+  const { id } = req.params;
+  const body = req.body;
+  const response = await service.update(id, body);
+  res.json(response);
+});
+
+router.delete('/:id', validatorHandler(getCategorySchema, 'params'), async (req, res) => {
+  const { id } = req.params;
+  const response = await service.delete(id);
+  res.status(200).json(response);
+});
+
+module.exports = router;
