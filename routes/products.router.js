@@ -9,7 +9,6 @@ const service = new ProductsService();
 
 router.get('/', validatorHandler(queryProductSchema, "query"), async (req, res, next) => {
   try {
-    // const { limit, offset } = req.query;
     const response = await service.find(req.query);
     res.json(response);
   } catch (error) {

@@ -8,6 +8,9 @@ const userId = Joi.number().integer();
 const email = Joi.string().email();
 const password =  Joi.string();
 
+const limit = Joi.number().integer();
+const offset = Joi.number().integer();
+
 const getCustomerSchema = Joi.object({
   id: id.required(),
 });
@@ -29,4 +32,10 @@ const updateCustomerSchema = Joi.object({
   userId
 });
 
-module.exports = { getCustomerSchema, createCustomerSchema, updateCustomerSchema };
+const queryCustomerSchema = Joi.object({
+  limit,
+  offset,
+});
+
+
+module.exports = { getCustomerSchema, createCustomerSchema, updateCustomerSchema, queryCustomerSchema };
