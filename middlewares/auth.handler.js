@@ -1,10 +1,10 @@
 const boom = require('@hapi/boom');
-const { config } = require('../config/config');
+// const { config } = require('../config/config');
 
-const checkApiKey = (req, res, next) => {
-  const { api_key } = req.headers;
-  api_key === config.apiKey ? next() : next(boom.unauthorized('Send api_key in headers'));
-};
+// const checkApiKey = (req, res, next) => {
+//   const { api_key } = req.headers;
+//   api_key === config.apiKey ? next() : next(boom.unauthorized('Send api_key in headers'));
+// };
 
 const checkRoles =
   (...roles) =>
@@ -14,4 +14,4 @@ const checkRoles =
     else next(boom.forbidden());
   };
 
-module.exports = { checkApiKey, checkRoles };
+module.exports = { checkRoles };

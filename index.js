@@ -2,14 +2,14 @@ const express = require('express');
 const routerAPI = require(`./routes`);
 const { logErrors, errorHandler, boomErrorHandler, ormErrorHandler } = require('./middlewares/error.handler');
 const cors = require('cors');
-const { checkApiKey } = require('./middlewares/auth.handler');
+// const { checkApiKey } = require('./middlewares/auth.handler');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
-app.get('/tests', checkApiKey, (req, res) => {
+app.get('/tests', (req, res) => {
   res.json({ funciona: true });
 });
 
