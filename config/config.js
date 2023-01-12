@@ -6,7 +6,7 @@ const config = {
   port: process.env.RAILWAY_PORT || 3000,
   dbUrl: process.env.RAILWAY_DATABASE_URL,
   // apiKey: process.env.API_KEY,
-  jwtSecret: process.env.API_KEY,
+  jwtSecret: process.env.RAILWAY_JWT_SECRET,
   nodeMailerConfig: {
     host: process.env.NODEMAILER_HOST,
     email: process.env.NODEMAILER_EMAIL,
