@@ -3,10 +3,10 @@ require('dotenv').config();
 const config = {
   env: process.env.NODE_ENV || 'dev',
   isProd: process.env.NODE_ENV === 'production',
-  port: process.env.RAILWAY_PORT || 3000,
-  dbUrl: process.env.RAILWAY_DATABASE_URL,
+  port: process.env.PORT || 3000,
+  dbUrl: process.env.SATABASE_URL,
   // apiKey: process.env.API_KEY,
-  jwtSecret: process.env.RAILWAY_JWT_SECRET,
+  jwtSecret: process.env.JWT_SECRET,
   nodeMailerConfig: {
     host: process.env.NODEMAILER_HOST,
     email: process.env.NODEMAILER_EMAIL,
