@@ -3,6 +3,10 @@ const { Op } = require('sequelize');
 const { models } = require('../libs/sequelize');
 
 class ProductsService {
+  async getByCategory(id) {
+    return await models.Product.findAll({ whre: { categoryId: id } });
+  }
+
   async create(data) {
     const newProduct = await models.Product.create(data);
     return newProduct;
@@ -13,18 +17,19 @@ class ProductsService {
       include: ['category'],
       where: {},
     };
-    const { limit, offset } = query;
-    (options.limit = limit), (options.offset = offset);
+    options.limit = query?.limit;
+    options.offset = query?.offset;
 
-    const { price_min, price_max } = query;
-    if (price_min && price_max) {
+    if (query?.price_min && query?.price_max) {
+      const { price_min, price_max } = query;
       options.where.price = {
         [Op.gte]: price_min,
         [Op.lte]: price_max,
       };
     }
-    const { price } = query;
-    if (price) {
+
+    if (query?.price) {
+      const { price } = query;
       options.where.price = price;
     }
     const products = await models.Product.findAll(options);
@@ -48,7 +53,7 @@ class ProductsService {
   async delete(id) {
     const rta = await this.findOne(id);
     await rta.destroy();
-    return { id };
+    return true;
   }
 }
 

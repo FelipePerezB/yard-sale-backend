@@ -16,8 +16,9 @@ class UserService {
 
   async find(query) {
     const options = {}
-    const { limit, offset } = query;
-    (options.limit = limit), (options.offset = offset);
+    options.limit = query?.limit
+    options.offset = query?.offset
+
     const rta = await models.User.findAll({
       ...options,
       include: ['customer'],
@@ -26,10 +27,14 @@ class UserService {
   }
 
   async findByEmail(email) {
-    const rta = await models.User.findOne({
-      where: {email}
-    })
-    return rta
+    try {
+      const rta = await models.User.findOne({
+        where: {email}
+      })
+      return rta
+    } catch (error) {
+      throw boom.unauthorized(error);
+    }
   }
   async findOne(id) {
     const user = await models.User.findByPk(id);

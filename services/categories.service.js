@@ -10,7 +10,7 @@ class CategoryService {
     return categories;
   }
   async findOne(id) {
-    const category = await models.Category.findByPk(id, { include: ['products'] });
+    const category = await models.Category.findByPk(id);
     return category;
   }
   async update(id, changes) {

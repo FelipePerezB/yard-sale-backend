@@ -7,8 +7,8 @@ const service = new AuthService();
 router.post('/login', passport.authenticate('local', { session: false }), async (req, res, next) => {
   try {
     const { user } = req;
-    const { token } = service.signToken(user);
-    res.json({ user, token });
+    const { access_token } = service.signToken(user);
+    res.json({ user, access_token });
   } catch (error) {
     next(error);
   }

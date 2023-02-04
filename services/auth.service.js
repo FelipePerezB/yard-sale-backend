@@ -21,7 +21,7 @@ class AuthService {
 
   async recoveryPassword(inputEmail) {
     const user = await userService.findByEmail(inputEmail);
-    if (!user) boom.unauthorized();
+    if (!user) throw boom.unauthorized();
     const payload = { sub: user.id };
     const token = jwt.sign(payload, config.jwtSecret, { expiresIn: '15min' });
     const link = 'htts://a.com/recovery?token=' + token;
@@ -77,7 +77,7 @@ class AuthService {
     const token = jwt.sign(payload, config.jwtSecret, { expiresIn: '7d' });
     return {
       user,
-      token,
+      access_token: token,
     };
   }
 }

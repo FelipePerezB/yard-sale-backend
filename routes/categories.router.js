@@ -9,10 +9,7 @@ const { checkRoles } = require('../middlewares/auth.handler');
 const router = express.Router();
 const service = new CategoriesService();
 
-router.get('/',
-passport.authenticate('jwt', { session: false }),
-checkRoles("admin", "customers"),
-validatorHandler(queryCategorySchema, 'query'), async (req, res, next) => {
+router.get('/', passport.authenticate('jwt', { session: false }), checkRoles('admin', 'customers'), validatorHandler(queryCategorySchema, 'query'), async (req, res, next) => {
   try {
     const response = await service.find(req.query);
     res.json(response);
@@ -31,7 +28,7 @@ router.get('/:id', validatorHandler(getCategorySchema, 'params'), async (req, re
   }
 });
 
-router.post('/', validatorHandler(createCategorySchema, 'body'), async (req, res) => {
+router.post('/', passport.authenticate('jwt', { session: false }), checkRoles('admin', 'customers'), validatorHandler(createCategorySchema, 'body'), async (req, res) => {
   const body = req.body;
   const response = await service.create(body);
   res.status(201).json(response);
