@@ -2,21 +2,21 @@ name: API CI
 on:
   push:
     branches: ['*']
-  services:
-    postgres-e2e:
-      image: postgres:13
-      ports:
-        - 5432:5432
-      env:
-        - POSTGRES_DB: db_e2e
-        - POSTGRES_USER: felipe
-        - POSTGRES_PASSWORD: admin123
 
 jobs:
   e2e:
     runs-on: ubuntu-latest
     container:
       image: node:16
+    services:
+      postgres-e2e:
+        image: postgres:13
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_DB: db_e2e
+          POSTGRES_USER: felipe
+          POSTGRES_PASSWORD: admin123
     steps:
       - name: Checkout
         uses: actions/checkout@v3
