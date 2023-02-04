@@ -26,5 +26,5 @@ jobs:
         run: pnpm e2e:ci
         env:
           PORT: 3000
-          DATABASE_URL: 'postgres://felipe:admin123@postgres-e2e:5432/db_e2e'
-          JWT_SECRET: "d124aab03a0ff7ccf98a96f0d82db7bcd1db0a9b2e9c82007e18b62be418259666ab792db8254c0fd66cb5cd30"
+          DATABASE_URL: postgres://felipe:admin123@postgres-e2e:5432/db_e2e
+          JWT_SECRET: d124aab03a0ff7ccf98a96f0d82db7bcd1db0a9b2e9c82007e18b62be418259666ab792db8254c0fd66cb5cd30
